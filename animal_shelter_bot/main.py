@@ -33,13 +33,13 @@ def setup_bot() -> Tuple[Bot, Dispatcher]:
         ValueError: Если токен бота не найден в .env файле
     """
     load_dotenv()
-    
+
     telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
     if not telegram_token:
         error_msg = "Токен бота не найден в .env файле!"
         logger.error(error_msg)
         raise ValueError(error_msg)
-        
+
     logger.info("Бот успешно инициализирован")
     return Bot(token=telegram_token), Dispatcher()
 
@@ -59,7 +59,7 @@ async def start_handler(message: types.Message) -> None:
     """
     greeting = "Привет! Я бот."
     await message.answer(greeting)
-    logger.info(f"Новый пользователь: {message.from_user.id}")
+    logger.info("Новый пользователь: {}", message.from_user.id)
 
 
 async def main() -> None:
@@ -68,7 +68,7 @@ async def main() -> None:
         logger.info("Запуск бота...")
         await dp.start_polling(bot)
     except Exception as e:
-        logger.error(f"Ошибка в работе бота: {e}")
+        logger.error("Ошибка в работе бота: {}", e)
     finally:
         logger.info("Бот остановлен")
 
@@ -77,5 +77,5 @@ if __name__ == "__main__":
     # Для Windows-систем
     if os.name == 'nt':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    
+
     asyncio.run(main())

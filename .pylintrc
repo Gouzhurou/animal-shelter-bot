@@ -1,0 +1,9 @@
+[LOGGING]
+
+# Format style used to check logging format string. `old` means using %
+# formatting, `new` is for `{}` formatting,and `fstr` is for f-strings.
+logging-format-style=new
+
+[MESSAGES CONTROL]
+disable =
+    broad-exception-caught,  # W0718
