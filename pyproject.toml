@@ -1,0 +1,21 @@
+[project]
+name = "animal-shelter-bot"
+version = "0.1.0"
+description = "Telegram bot for animal shelter"
+authors = [
+    {name = "Shangina Elena",email = "arlantamom1999@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "aiogram (>=3.19.0,<4.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.3.6"
