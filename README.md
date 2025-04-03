@@ -16,11 +16,35 @@
 
 ## Структура проекта
 
+```
+animal-shelter-bot/
+├── animal_shelter_bot/
+│   ├── main.py
+│   ├── states.py
+│   ├── user_block
+│   │   ├── app
+│   │   │   ├── handlers.py
+│   │   │   └── keyboards.py
+│   │   └── const.py
+│   └── registration
+│       ├── app
+│       │   ├── handlers.py
+│       │   ├── keyboards.py
+│       │   └── utils.py
+│       └── const.py
+├── sql_scripts/
+│   └── init.sql
+├── .env
+├── .gitignore
+├── docker-compose.yaml
+├── pyproject.toml
+├── README.md
+└── TASK.md
+```
+
 ******
 
-## Разработка
-
-Для начала разработки библиотеки необходимо выполнить следующие действия:
+## Начало работы с проектом
 
 1. Клонировать репозиторий:
 
@@ -28,33 +52,84 @@
 git clone https://github.com/Gouzhurou/animal-shelter-bot.git
 ```
 
-2. (По желанию) Создать виртуальное окружение, так как проект требует точных версий пакетов:
+2. Установите Poetry (если нет):
 
 ```bash
-python -m venv venv
+pip install poetry
 ```
 
-Активировать виртуальное окружение, если оно было создано.
+3. Установите зависимости:
 
-3. Создать новую ветку на основе main:
+```bash
+poetry install
+```
+
+4. Сгенерируйте токен в [BotFather](https://t.me/BotFather)
+
+5. Добавьте файл `.env` в корень проекта со своими данными
+
+```
+TELEGRAM_BOT_TOKEN=token
+DB_USER=user
+DB_PASSWORD=password
+```
+
+***
+
+## Разработка
+
+1. Создать новую ветку на основе main:
 
 ```bash
 git checkout -b main <feature/branch_name>
 ```
 
-4. Начать внесение изменений в своей новосозданной ветке: в ветке main не работаем!
+2. Начать внесение изменений в своей новосозданной ветке: в ветке main не работаем!
 
-5. Когда вы закончите редактирование и локальное тестирование, выполните:
+3. Когда вы закончите редактирование и локальное тестирование, проверьте код:
+
+```bash
+poetry run pylint animal_shelter_bot/
+```
+
+4. Сохраните изменения
 
 ```bash
 git add modified_files
 git commit
 ```
 
-6. Залейте изменения на удаленный репозиторий:
+5. Залейте изменения на удаленный репозиторий:
 
 ```bash
 git push
+```
+
+*****
+
+## Запуск
+
+```bash
+poetry run python -m animal_shelter_bot.main
+```
+
+*****
+
+## Работа с БД
+
+1. Запуск контейнера
+```bash
+docker-compose up -d
+```
+
+2. Остановка контейнера
+```bash
+docker-compose down
+```
+
+3. Подключение к контейнеру
+```bash
+docker exec -it animal_shelter_db psql -U admin -d animal_shelter_db
 ```
 
 *****
@@ -63,7 +138,6 @@ git push
 
 * branch: `<feature/my-branch>`
 * commit: `feat: commit message`
-* константы: `CONST`
 * один PR = один commit
   * Создаете новый commit
   * Делаете squash с предыдущим
