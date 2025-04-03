@@ -49,6 +49,14 @@ pip install poetry
 poetry install
 ```
 
+4. Сгенерируйте токен в [BotFather](https://t.me/BotFather)
+
+5. Добавьте файл `.env` в корень проекта со своим токеном
+
+```
+TELEGRAM_BOT_TOKEN=token
+```
+
 ***
 
 ## Разработка
