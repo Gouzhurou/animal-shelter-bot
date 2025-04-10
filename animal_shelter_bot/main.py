@@ -12,8 +12,8 @@ import asyncio
 import logging
 from typing import Tuple
 from dotenv import load_dotenv
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
+from aiogram import Bot, Dispatcher
+from animal_shelter_bot.app.handlers import h_router
 
 # Настройка логирования
 logging.basicConfig(
@@ -47,25 +47,11 @@ def setup_bot() -> Tuple[Bot, Dispatcher]:
 bot, dp = setup_bot()
 
 
-@dp.message(Command("start"))
-async def start_handler(message: types.Message) -> None:
-    """Обработчик команды /start.
-    
-    Args:
-        message: Объект входящего сообщения от пользователя
-    
-    Пример ответа:
-        "Привет! Я бот."
-    """
-    greeting = "Привет! Я бот."
-    await message.answer(greeting)
-    logger.info("Новый пользователь: {}", message.from_user.id)
-
-
 async def main() -> None:
     """Основная асинхронная функция для запуска бота."""
     try:
         logger.info("Запуск бота...")
+        dp.include_router(h_router) #Передает диспетчеру данные с роутера, отвечающего за хэндлеры
         await dp.start_polling(bot)
     except Exception as e:
         logger.error("Ошибка в работе бота: {}", e)
