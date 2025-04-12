@@ -1,7 +1,7 @@
 """Модуль где будут хранится все хэндлеры"""
 
 from aiogram.filters import Command
-from aiogram.types import Message, CallbackQuery #Проще импортировать нужные типы так, чтобы не писать постоянно types.
+from aiogram.types import Message, CallbackQuery #Проще импортировать нужные типы так
 from aiogram import Router, F
 import app.keyboards as kb #Содержит клавиатуры
 
@@ -25,7 +25,8 @@ async def start_handler(message: Message) -> None:
 @h_router.message(F.text == 'Посмотреть GitHub проекта')
 async def git_hub_link_handler(message: Message):
     """Орбраточик запроса ссылки на Git для демонстрации работы меню"""
-    await message.answer('Вы можете ознакомится с гитхабом проекта по ссылке ниже', reply_markup=kb.inline_example)
+    await message.answer('Вы можете ознакомится с гитхабом проекта по ссылке ниже',
+                         reply_markup=kb.inline_example)
 
 
 @h_router.message(F.text == 'О нас')
@@ -38,7 +39,8 @@ async def about_us_handler(message: Message):
 async def back_about_us_handler(callback: CallbackQuery):
     """Обработик кнопки 'назад' в inline меню 'о нас' возвращает меню в старотовое состояние"""
     await callback.answer()
-    await callback.message.edit_text('Что именно вы бы хотели узнать о нас?', reply_markup=kb.inline_about_us)
+    await callback.message.edit_text('Что именно вы бы хотели узнать о нас?',
+                                     reply_markup=kb.inline_about_us)
 
 
 @h_router.callback_query(F.data == 'our_principles')
@@ -76,4 +78,5 @@ async def our_address_handler(callback: CallbackQuery):
 async def opening_hours_handler(callback: CallbackQuery):
     """Обработик кнопки 'часы работы' в inline меню 'о нас' выводит текст"""
     await callback.answer()
-    await callback.message.edit_text('Ежедневно с 10.00-22.00', reply_markup=kb.inline_back_about_us)
+    await callback.message.edit_text('Ежедневно с 10.00-22.00',
+                                     reply_markup=kb.inline_back_about_us)
