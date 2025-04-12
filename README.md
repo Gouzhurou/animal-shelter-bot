@@ -19,7 +19,10 @@
 ```
 animal-shelter-bot/
 ├── animal_shelter_bot/
-│   └── main.py
+│   ├── main.py
+│   └── app
+│       ├── handlers.py
+│       └── keyboards.py
 ├── .env
 ├── .gitignore
 ├── pyproject.toml
