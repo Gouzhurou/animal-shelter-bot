@@ -14,6 +14,18 @@ from typing import Tuple
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+
+GREETING_MESSAGE = "Привет! Я бот."
+TOKEN_ERROR_MSG = "Токен бота не найден в .env файле!"
+BOT_INIT_SUCCESS_MSG = "Бот успешно инициализирован"
+BOT_START_MSG = "Запуск бота..."
+BOT_STOP_MSG = "Бот остановлен"
+
+START_BOT_CALLBACK = "start_bot"
+
+START_BUTTON_TEXT = "Начать"
 
 # Настройка логирования
 logging.basicConfig(
@@ -24,24 +36,37 @@ logger = logging.getLogger(__name__)
 
 
 def setup_bot() -> Tuple[Bot, Dispatcher]:
-    """Инициализирует и возвращает экземпляры бота и диспетчера.
+    """
+    Настройка и инициализация бота.
     
     Returns:
-        Tuple[Bot, Dispatcher]: Кортеж с объектами бота и диспетчера
-    
+        Tuple[Bot, Dispatcher]: Инициализированные экземпляры бота и диспетчера.
+        
     Raises:
-        ValueError: Если токен бота не найден в .env файле
+        ValueError: Если токен бота не найден в .env файле.
     """
     load_dotenv()
 
     telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
     if not telegram_token:
-        error_msg = "Токен бота не найден в .env файле!"
-        logger.error(error_msg)
-        raise ValueError(error_msg)
+        logger.error(TOKEN_ERROR_MSG)
+        raise ValueError(TOKEN_ERROR_MSG)
 
-    logger.info("Бот успешно инициализирован")
+    logger.info(BOT_INIT_SUCCESS_MSG)
     return Bot(token=telegram_token), Dispatcher()
+
+
+def get_start_keyboard() -> InlineKeyboardMarkup:
+    """
+    Создаёт и возвращает инлайн-клавиатуру для стартового сообщения бота.
+    
+    Returns:
+        InlineKeyboardMarkup: Клавиатура с кнопкой для начала работы с ботом.
+    """
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=START_BUTTON_TEXT, callback_data=START_BOT_CALLBACK)]
+    ])
+    return keyboard
 
 
 bot, dp = setup_bot()
@@ -49,28 +74,38 @@ bot, dp = setup_bot()
 
 @dp.message(Command("start"))
 async def start_handler(message: types.Message) -> None:
-    """Обработчик команды /start.
+    """
+    Обработчик команды /start. Отправляет приветственное сообщение пользователю.
     
     Args:
-        message: Объект входящего сообщения от пользователя
-    
-    Пример ответа:
-        "Привет! Я бот."
+        message (types.Message): Сообщение пользователя.
     """
-    greeting = "Привет! Я бот."
-    await message.answer(greeting)
-    logger.info("Новый пользователь: {}", message.from_user.id)
+    await message.answer(GREETING_MESSAGE, reply_markup=get_start_keyboard())
+    logger.info(f"Новый пользователь: {message.from_user.id}")
+
+
+@dp.callback_query(lambda c: c.data == START_BOT_CALLBACK)
+async def on_start_button(callback: types.CallbackQuery) -> None:
+    """
+    Обработчик нажатия на кнопку "Начать".
+    
+    Args:
+        callback (types.CallbackQuery): Данные обратного вызова.
+    """
+    await callback.answer()
+    await callback.message.answer("Вы нажали кнопку Начать!")
+    logger.info(f"Пользователь {callback.from_user.id} нажал кнопку Начать")
 
 
 async def main() -> None:
     """Основная асинхронная функция для запуска бота."""
     try:
-        logger.info("Запуск бота...")
+        logger.info(BOT_START_MSG)
         await dp.start_polling(bot)
     except Exception as e:
-        logger.error("Ошибка в работе бота: {}", e)
+        logger.error(f"Ошибка в работе бота: {e}")
     finally:
-        logger.info("Бот остановлен")
+        logger.info(BOT_STOP_MSG)
 
 
 if __name__ == "__main__":
