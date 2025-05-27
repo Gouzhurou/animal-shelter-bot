@@ -20,8 +20,11 @@
 animal-shelter-bot/
 ├── animal_shelter_bot/
 │   └── main.py
+├── sql_scripts/
+│   └── init.sql
 ├── .env
 ├── .gitignore
+├── docker-compose.yaml
 ├── pyproject.toml
 ├── README.md
 └── TASK.md
@@ -51,10 +54,12 @@ poetry install
 
 4. Сгенерируйте токен в [BotFather](https://t.me/BotFather)
 
-5. Добавьте файл `.env` в корень проекта со своим токеном
+5. Добавьте файл `.env` в корень проекта со своими данными
 
 ```
 TELEGRAM_BOT_TOKEN=token
+DB_USER=user
+DB_PASSWORD=password
 ```
 
 ***
@@ -94,6 +99,25 @@ git push
 
 ```bash
 poetry run python -m animal_shelter_bot.main
+```
+
+*****
+
+## Работа с БД
+
+1. Запуск контейнера
+```bash
+docker-compose up -d
+```
+
+2. Остановка контейнера
+```bash
+docker-compose down
+```
+
+3. Подключение к контейнеру
+```bash
+docker exec -it animal_shelter_db psql -U admin -d animal_shelter_db
 ```
 
 *****
