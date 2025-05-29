@@ -7,3 +7,5 @@ logging-format-style=new
 [MESSAGES CONTROL]
 disable =
     broad-exception-caught,  # W0718
+    too-few-public-methods,  # R0903
+    fixme, #W0551

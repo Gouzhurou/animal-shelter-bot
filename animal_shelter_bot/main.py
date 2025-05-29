@@ -12,8 +12,9 @@ import asyncio
 import logging
 from typing import Tuple
 from dotenv import load_dotenv
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
+from aiogram import Bot, Dispatcher
+from animal_shelter_bot.user_block.app.handlers import user_router
+from animal_shelter_bot.registration.app.handlers import registration_router
 
 # Настройка логирования
 logging.basicConfig(
@@ -25,10 +26,10 @@ logger = logging.getLogger(__name__)
 
 def setup_bot() -> Tuple[Bot, Dispatcher]:
     """Инициализирует и возвращает экземпляры бота и диспетчера.
-    
+
     Returns:
         Tuple[Bot, Dispatcher]: Кортеж с объектами бота и диспетчера
-    
+
     Raises:
         ValueError: Если токен бота не найден в .env файле
     """
@@ -47,25 +48,12 @@ def setup_bot() -> Tuple[Bot, Dispatcher]:
 bot, dp = setup_bot()
 
 
-@dp.message(Command("start"))
-async def start_handler(message: types.Message) -> None:
-    """Обработчик команды /start.
-    
-    Args:
-        message: Объект входящего сообщения от пользователя
-    
-    Пример ответа:
-        "Привет! Я бот."
-    """
-    greeting = "Привет! Я бот."
-    await message.answer(greeting)
-    logger.info("Новый пользователь: {}", message.from_user.id)
-
-
 async def main() -> None:
     """Основная асинхронная функция для запуска бота."""
     try:
         logger.info("Запуск бота...")
+        dp.include_router(user_router)
+        dp.include_router(registration_router)
         await dp.start_polling(bot)
     except Exception as e:
         logger.error("Ошибка в работе бота: {}", e)
