@@ -14,7 +14,10 @@ from typing import Tuple
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-
+from animal_shelter_bot.registration import setup_registration_handlers
+from animal_shelter_bot.admin_block import setup_admin_handlers
+from animal_shelter_bot.const.messages import Messages
+from animal_shelter_bot.const.buttons import Buttons
 # Настройка логирования
 logging.basicConfig(
     level=logging.INFO,
@@ -45,22 +48,24 @@ def setup_bot() -> Tuple[Bot, Dispatcher]:
 
 
 bot, dp = setup_bot()
+setup_registration_handlers(dp)
+setup_admin_handlers(dp)
 
-
+"""
 @dp.message(Command("start"))
 async def start_handler(message: types.Message) -> None:
-    """Обработчик команды /start.
+   Обработчик команды /start.
     
     Args:
         message: Объект входящего сообщения от пользователя
     
     Пример ответа:
         "Привет! Я бот."
-    """
+   
     greeting = "Привет! Я бот."
     await message.answer(greeting)
     logger.info("Новый пользователь: {}", message.from_user.id)
-
+"""
 
 async def main() -> None:
     """Основная асинхронная функция для запуска бота."""
