@@ -122,3 +122,7 @@ class UserMessages():
                             'электронная почта организации: predannoe.serdce.spb@gmail.com')
     REVIEW = 'Оставить отзыв *link*'
     GIFT = 'PLACEHOLDER'
+
+class UserLinks():
+    LINK_HELP_ANIMALS = 'https://predannoeserdce.ru/help/'
+    LINK_URGENT_HELP = 'https://predannoeserdce.ru/catalog-sos/'
