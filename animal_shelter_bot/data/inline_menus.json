@@ -1,0 +1,84 @@
+{
+  "inline_urgent_help": [
+    [
+      "Помочь срочно",
+      "https://predannoeserdce.ru/catalog-sos/"
+    ]
+  ],
+  "inline_help_animals": [
+    [
+      "Помочь животным",
+      "https://predannoeserdce.ru/"
+    ]
+  ],
+  "inline_animal_catalog": [
+    [
+      "На сайте",
+      "https://predannoeserdce.ru/"
+    ],
+    [
+      "В группе ВК",
+      "https://vk.com/predannoeserdce.help"
+    ]
+  ],
+  "inline_take_animal": [
+    [
+      "анкета",
+      "https://drive.google.com/file/d/1JaQ3vBCc4I-Gfg7jaTYDCXcW6XiQSKyj/view?usp=drivesdk"
+    ]
+  ],
+  "inline_become_a_guardian": [
+    [
+      "Сайт",
+      "https://predannoeserdce.ru/"
+    ],
+    [
+      "Группа ВК",
+      "https://vk.com/predannoeserdce.help"
+    ],
+    [
+      "Анкета попечителя",
+      "https://forms.gle/6BtGNVhDqzhKgCdDA"
+    ],
+    [
+      "Подробнее о попечительской программе",
+      "https://vk.com/topic-97508475_32994671#"
+    ]
+  ],
+  "inline_buy_ticket": [
+    [
+      "Timepad",
+      "https://predannoeserdce.timepad.ru/events/"
+    ]
+  ],
+  "inline_social_networks": [
+    [
+      "🌐 Сайт",
+      "https://predannoeserdce.ru/"
+    ],
+    [
+      "📱 ВКонтакте",
+      "https://vk.com/predannoeserdce.help"
+    ],
+    [
+      "📨 Телеграм",
+      "https://t.me/predannoeserdse"
+    ],
+    [
+      "👥 Одноклассники",
+      "https://ok.ru/group/62156702089323"
+    ]
+  ],
+  "inline_view_reports": [
+    [
+      "Посмотреть отчеты",
+      "https://predannoeserdce.ru/otchetnost/"
+    ]
+  ],
+  "inline_ask_a_question": [
+    [
+      "Задать вопрос",
+      "https://predannoeserdce.ru/kontakty-i-rekvizity/"
+    ]
+  ]
+}

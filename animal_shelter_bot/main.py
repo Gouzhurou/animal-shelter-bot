@@ -13,8 +13,11 @@ import logging
 from typing import Tuple
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher
-from animal_shelter_bot.user_block.app.handlers import user_router
 from animal_shelter_bot.registration.app.handlers import registration_router
+from animal_shelter_bot.user_block.app.handlers import (user_router, register_handlers,
+                                                        load_inline_menus, load_handlers)
+from animal_shelter_bot.admin_block.app.handlers import admin_router
+from animal_shelter_bot.user_block.app.keyboards import load_reply_keyboards
 
 # Настройка логирования
 logging.basicConfig(
@@ -52,13 +55,19 @@ async def main() -> None:
     """Основная асинхронная функция для запуска бота."""
     try:
         logger.info("Запуск бота...")
+        load_reply_keyboards()
+        load_inline_menus()
+        load_handlers()
         dp.include_router(user_router)
+        dp.include_router(admin_router)
         dp.include_router(registration_router)
+        register_handlers()
         await dp.start_polling(bot)
     except Exception as e:
         logger.error("Ошибка в работе бота: {}", e)
     finally:
         logger.info("Бот остановлен")
+
 
 
 if __name__ == "__main__":
